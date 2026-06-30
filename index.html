@@ -1,0 +1,639 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>EEC Policy Review — Pre-Meeting Packet (DRAFT)</title>
+<style>
+  :root{
+    --navy:#0A1E3F;--navy-2:#13315C;--magenta:#C6168D;--cyan:#1AA3C4;
+    --paper:#F5F6F9;--card:#FFFFFF;--ink:#16202E;--muted:#5C6B7C;
+    --hair:#E3E8EF;--hair-2:#EEF1F5;--vote-bg:#FBEAF4;--fyi-bg:#E7F5F9;--ok:#1F9D6B;--disc:#6E59C7;
+    --await-bd:#D8C68A;--await-bg:#FFFDF5;--await-tx:#856A1E;
+    --shadow:0 1px 2px rgba(10,30,63,.06), 0 8px 24px rgba(10,30,63,.06);
+    font-synthesis:none;
+  }
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  @media (prefers-reduced-motion: reduce){ html{scroll-behavior:auto;} *{transition:none!important;animation:none!important;} }
+  body{margin:0;font-family:"Helvetica Neue",Helvetica,Arial,sans-serif;color:var(--ink);background:var(--paper);line-height:1.5;-webkit-font-smoothing:antialiased;}
+
+  .masthead{background:linear-gradient(135deg,var(--navy) 0%, var(--navy-2) 100%);color:#fff;padding:22px clamp(16px,4vw,40px) 0;}
+  .mast-top{display:flex;align-items:flex-start;justify-content:space-between;gap:24px;flex-wrap:wrap;}
+  .brand-mark{font-weight:700;letter-spacing:.16em;font-size:13px;text-transform:uppercase;border:1.5px solid rgba(255,255,255,.55);border-radius:3px;padding:6px 9px;white-space:nowrap;}
+  .brand-mark .pipe{opacity:.5;margin:0 7px;}
+  .eyebrow{text-transform:uppercase;letter-spacing:.22em;font-size:11px;font-weight:600;color:var(--cyan);margin:16px 0 6px;}
+  h1.mast-title{font-size:clamp(21px,3vw,29px);font-weight:700;letter-spacing:-.01em;margin:0 0 4px;line-height:1.15;}
+  .mast-sub{color:rgba(255,255,255,.78);font-size:14px;margin:0;max-width:54ch;}
+  .mast-meta{text-align:right;font-size:13px;color:rgba(255,255,255,.82);line-height:1.7;min-width:200px;}
+  .mast-meta strong{color:#fff;font-weight:600;}
+  .mast-meta .pill{display:inline-block;background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.18);border-radius:999px;padding:2px 10px;font-size:12px;}
+
+  .meter-wrap{margin:20px 0 0;padding:16px 0 18px;border-top:1px solid rgba(255,255,255,.14);display:flex;align-items:center;gap:16px;flex-wrap:wrap;}
+  .meter-label{font-size:13px;color:rgba(255,255,255,.85);white-space:nowrap;}
+  .meter-label b{color:#fff;font-size:15px;}
+  .meter-track{flex:1;min-width:160px;height:8px;border-radius:99px;background:rgba(255,255,255,.16);overflow:hidden;}
+  .meter-fill{height:100%;width:0%;border-radius:99px;background:linear-gradient(90deg,var(--cyan),var(--magenta));transition:width .45s cubic-bezier(.2,.7,.3,1);}
+  .agree-stat{font-size:13px;color:rgba(255,255,255,.85);white-space:nowrap;}
+  .agree-stat b{color:#fff;}
+  .mast-actions{display:flex;gap:8px;flex-wrap:wrap;align-items:center;}
+  .name-input{font-family:inherit;font-size:13px;padding:8px 11px;border-radius:6px;border:1px solid rgba(255,255,255,.35);background:rgba(255,255,255,.1);color:#fff;width:150px;}
+  .name-input::placeholder{color:rgba(255,255,255,.6);}
+  .btn-ghost{background:transparent;color:#fff;border:1px solid rgba(255,255,255,.35);border-radius:6px;padding:8px 13px;font-size:13px;font-weight:500;cursor:pointer;font-family:inherit;}
+  .btn-ghost:hover{background:rgba(255,255,255,.1);}
+  .prevote-note{flex:1 0 100%;font-size:12px;color:rgba(255,255,255,.7);margin:2px 0 0;}
+
+  .draft-banner{background:#FFF7E0;border-bottom:1px solid #F0E0A8;color:#7A5B00;font-size:13px;padding:11px clamp(16px,4vw,40px);}
+  .draft-banner b{letter-spacing:.03em;}
+  .draft-banner ul{margin:6px 0 0;padding-left:18px;}
+  .draft-banner li{margin:2px 0;}
+
+  .shell{display:grid;grid-template-columns:264px 1fr;gap:30px;max-width:1180px;margin:0 auto;padding:26px clamp(16px,4vw,40px) 80px;align-items:start;}
+
+  .ledger{position:sticky;top:18px;}
+  .ledger-head{font-size:11px;text-transform:uppercase;letter-spacing:.16em;color:var(--muted);font-weight:600;margin:0 0 10px;padding-left:4px;}
+  .ledger-list{list-style:none;margin:0;padding:0;border-radius:10px;overflow:hidden;border:1px solid var(--hair);background:var(--card);box-shadow:var(--shadow);}
+  .ledger-item{display:grid;grid-template-columns:24px 1fr 30px;align-items:center;gap:9px;padding:9px 12px;border-bottom:1px solid var(--hair-2);cursor:pointer;font-size:13px;color:var(--ink);background:none;border-left:3px solid transparent;width:100%;text-align:left;font-family:inherit;}
+  .ledger-item:last-child{border-bottom:none;}
+  .ledger-item:hover{background:#F7F9FC;}
+  .ledger-item:focus-visible{outline:2px solid var(--cyan);outline-offset:-2px;}
+  .ledger-num{font-variant-numeric:tabular-nums;color:var(--muted);font-weight:600;font-size:12px;}
+  .ledger-name{overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
+  .dot{width:8px;height:8px;border-radius:50%;flex:none;display:inline-block;}
+  .dot.vote{background:var(--magenta);}
+  .dot.fyi{background:var(--cyan);}
+  .ledger-state{display:flex;gap:3px;justify-content:flex-end;align-items:center;}
+  .ledger-state .r,.ledger-state .a{font-size:12px;font-weight:700;opacity:0;}
+  .ledger-state .r{color:var(--ok);}
+  .ledger-state .a{color:var(--magenta);}
+  .ledger-item.done .r{opacity:1;}
+  .ledger-item.agreed .a{opacity:1;}
+  .ledger-item.done .ledger-name{color:var(--muted);}
+  .ledger-item.done{border-left-color:var(--ok);}
+  .ledger-legend{display:flex;gap:14px;margin:12px 2px 0;font-size:12px;color:var(--muted);flex-wrap:wrap;}
+  .ledger-legend span{display:flex;align-items:center;gap:6px;}
+
+  .toolbar{position:sticky;top:0;z-index:5;background:var(--paper);padding:10px 0 14px;margin-bottom:4px;border-bottom:1px solid var(--hair);display:flex;align-items:center;gap:10px;flex-wrap:wrap;}
+  .seg{display:inline-flex;background:#fff;border:1px solid var(--hair);border-radius:8px;padding:3px;gap:2px;}
+  .seg button{border:none;background:none;font-family:inherit;font-size:13px;font-weight:500;color:var(--muted);padding:7px 14px;border-radius:6px;cursor:pointer;display:flex;align-items:center;gap:7px;}
+  .seg button .cnt{font-variant-numeric:tabular-nums;font-size:11px;opacity:.7;}
+  .seg button[aria-pressed="true"]{background:var(--navy);color:#fff;}
+  .seg button:focus-visible{outline:2px solid var(--cyan);outline-offset:1px;}
+  .seg .short{display:none;}
+  .toolbar-spacer{flex:1;}
+  .toolbar-note{font-size:12px;color:var(--muted);}
+
+  .cards{display:flex;flex-direction:column;gap:16px;margin-top:16px;}
+  .card{background:var(--card);border:1px solid var(--hair);border-radius:12px;box-shadow:var(--shadow);overflow:hidden;scroll-margin-top:74px;}
+  .card.done{border-color:#CFE6DA;}
+  .card-head{display:flex;align-items:flex-start;gap:14px;padding:18px 20px 14px;border-bottom:1px solid var(--hair-2);}
+  .card-num{font-variant-numeric:tabular-nums;font-weight:700;font-size:13px;color:#fff;background:var(--navy);border-radius:6px;min-width:30px;height:30px;display:flex;align-items:center;justify-content:center;flex:none;margin-top:2px;}
+  .card-titles{flex:1;min-width:0;}
+  .card-title{font-size:17px;font-weight:700;letter-spacing:-.01em;margin:0 0 7px;line-height:1.25;}
+  .card-sub{font-size:12.5px;color:var(--muted);margin:-3px 0 8px;}
+  .tags{display:flex;gap:7px;flex-wrap:wrap;}
+  .tag{font-size:11px;font-weight:600;letter-spacing:.03em;border-radius:5px;padding:3px 9px;text-transform:uppercase;}
+  .tag.vote{background:var(--vote-bg);color:#A01070;}
+  .tag.fyi{background:var(--fyi-bg);color:#0F7C95;}
+  .tag.src-ok{background:#E9F7EF;color:#1F7A52;}
+  .tag.src-warn{background:#FFF3D6;color:#9A6A00;border:1px solid #F0DCA0;}
+
+
+  .dot.disc{background:var(--disc);}
+  .dot.discvote{background:var(--disc);}
+  .tag.disc{background:#ECE9F8;color:#4A3A9C;}
+  .asked.disc{border-left-color:var(--disc);}
+  .related{display:flex;gap:6px;flex-wrap:wrap;align-items:center;}
+  .relchip{font-size:12px;font-weight:600;color:var(--navy-2);background:#fff;border:1px solid var(--hair);border-radius:6px;padding:5px 9px;cursor:pointer;font-family:inherit;}
+  .relchip:hover{background:#F7F9FC;border-color:var(--cyan);}
+  details.cmt{margin:4px 0 2px;}
+  details.cmt summary{list-style:none;cursor:pointer;font-size:12.5px;font-weight:600;color:var(--navy-2);padding:8px 0;display:flex;align-items:center;gap:7px;}
+  details.cmt summary::-webkit-details-marker{display:none;}
+  details.cmt summary .chev{font-size:11px;color:var(--muted);transition:transform .2s;}
+  details.cmt[open] summary .chev{transform:rotate(90deg);}
+  .cmt textarea{width:100%;min-height:64px;font-family:inherit;font-size:13px;border:1px solid var(--hair);border-radius:8px;padding:9px 11px;resize:vertical;color:var(--ink);background:#fff;margin-bottom:8px;}
+  .cmt textarea:focus{outline:2px solid var(--cyan);outline-offset:0;border-color:var(--cyan);}
+  .cmtcta{display:flex;align-items:center;gap:11px;flex-wrap:wrap;padding:10px 0 2px;}
+  .cmtbtn{display:inline-flex;align-items:center;gap:7px;font-size:13px;font-weight:600;color:#fff;background:var(--magenta);border-radius:8px;padding:10px 15px;text-decoration:none;}
+  .cmtbtn:hover{background:#A81277;}
+  .cmtcta-note{font-size:12px;color:var(--muted);}
+  .toggle{display:inline-flex;align-items:center;gap:8px;font-family:inherit;font-size:13px;font-weight:500;color:var(--muted);background:#fff;border:1px solid var(--hair);border-radius:8px;padding:8px 13px;cursor:pointer;}
+  .toggle[aria-pressed="true"]{background:var(--navy);color:#fff;border-color:var(--navy);}
+  .toggle .bx{width:15px;height:15px;border:1.5px solid currentColor;border-radius:4px;display:inline-flex;align-items:center;justify-content:center;font-size:10px;}
+  .flag-row{margin:12px 20px 0;background:#FDF0F6;border:1px solid #F3CFE3;border-left:3px solid var(--magenta);border-radius:8px;padding:9px 13px;font-size:12.5px;color:#8C1B66;}
+  .flag-row b{font-weight:700;}
+
+  .card-body{padding:6px 20px 4px;}
+  .field{padding:12px 0;border-bottom:1px solid var(--hair-2);}
+  .field:last-child{border-bottom:none;}
+  .field-label{font-size:11px;text-transform:uppercase;letter-spacing:.13em;font-weight:600;color:var(--magenta);margin:0 0 6px;display:flex;align-items:center;gap:8px;flex-wrap:wrap;}
+  .field.intent .field-label{color:var(--cyan);}
+  .field.change .field-label{color:var(--navy-2);}
+  .chip-prop{font-size:9.5px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:#9A6A00;background:#FFF3D6;border:1px solid #F0DCA0;border-radius:4px;padding:1px 6px;}
+  .field-intent-text{font-size:15.5px;font-weight:500;color:var(--ink);margin:0;line-height:1.45;}
+  ul.does{margin:2px 0 0;padding-left:18px;}
+  ul.does li{margin:4px 0;font-size:14px;}
+  .ri p{margin:5px 0;font-size:14px;}
+  .ri .sub{font-weight:600;color:#41566B;}
+  .gov{font-size:12.5px;color:#41566B;background:#F7F9FC;border:1px solid var(--hair);border-radius:8px;padding:9px 12px;line-height:1.6;}
+  .gov b{color:var(--ink);font-weight:600;}
+  .changing-text{font-size:14px;margin:0;}
+  .asked{background:#F7F9FC;border:1px solid var(--hair);border-left:3px solid var(--magenta);border-radius:8px;padding:11px 14px;font-size:14px;margin-top:2px;}
+  .asked.fyi{border-left-color:var(--cyan);}
+  .asked b{font-weight:600;}
+  .await{border:1px dashed var(--await-bd);background:var(--await-bg);color:var(--await-tx);border-radius:8px;padding:11px 13px;font-size:13px;margin-top:2px;display:flex;gap:9px;align-items:flex-start;}
+  .await .ic{font-weight:700;flex:none;}
+
+  details.fulltext{margin:4px 0 0;border-top:1px solid var(--hair-2);}
+  details.fulltext summary{list-style:none;cursor:pointer;font-size:13px;font-weight:600;color:var(--navy-2);padding:13px 0 12px;display:flex;align-items:center;gap:8px;}
+  details.fulltext summary::-webkit-details-marker{display:none;}
+  details.fulltext summary .chev{transition:transform .2s;font-size:11px;color:var(--muted);}
+  details.fulltext[open] summary .chev{transform:rotate(90deg);}
+  .fulltext-body{margin:0 0 14px;}
+  .src-link{display:inline-flex;align-items:center;gap:8px;font-size:13px;font-weight:600;color:var(--navy-2);text-decoration:none;border:1px solid var(--hair);background:#fff;border-radius:7px;padding:10px 14px;}
+  .src-link:hover{background:#F7F9FC;border-color:var(--cyan);}
+  .src-links{display:flex;flex-direction:column;gap:8px;align-items:flex-start;}
+  .src-note{font-size:12px;color:var(--muted);margin:8px 0 14px;}
+
+  .card-foot{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:13px 20px;background:#FBFCFE;border-top:1px solid var(--hair-2);flex-wrap:wrap;}
+  .summary-note{font-size:12px;color:var(--muted);max-width:40ch;}
+  .summary-note b{color:#41566B;font-weight:600;}
+  .acts{display:flex;gap:9px;flex-wrap:wrap;}
+  .chk{display:inline-flex;align-items:center;gap:9px;font-family:inherit;font-size:13px;font-weight:600;border-radius:8px;padding:9px 14px;cursor:pointer;border:1px solid var(--hair);background:#fff;color:var(--ink);white-space:nowrap;}
+  .chk .bx{width:16px;height:16px;border:1.6px solid #9AA7B4;border-radius:4px;display:inline-flex;align-items:center;justify-content:center;font-size:11px;color:transparent;}
+  .chk:hover{background:#F7F9FC;}
+  .chk:focus-visible{outline:2px solid var(--cyan);outline-offset:2px;}
+  .rv{display:inline-flex;align-items:center;gap:9px;font-family:inherit;font-size:13px;font-weight:600;border-radius:8px;padding:9px 14px;cursor:pointer;border:1px solid var(--hair);background:#fff;color:var(--ink);}
+  .rv .bx{width:16px;height:16px;border:1.6px solid #9AA7B4;border-radius:4px;display:inline-flex;align-items:center;justify-content:center;font-size:11px;color:transparent;flex:none;}
+  .rv:hover{background:#F7F9FC;}
+  .rv:focus-visible{outline:2px solid var(--cyan);outline-offset:2px;}
+  .rv-clear[aria-pressed="true"]{border-color:var(--ok);background:var(--ok);color:#fff;}
+  .rv-clear[aria-pressed="true"] .bx{background:#fff;border-color:#fff;color:var(--ok);}
+  .rv-flag[aria-pressed="true"]{border-color:var(--magenta);background:var(--magenta);color:#fff;}
+  .rv-flag[aria-pressed="true"] .bx{background:#fff;border-color:#fff;color:var(--magenta);}
+  .ledger-state .f{font-size:12px;font-weight:700;color:var(--magenta);opacity:0;}
+  .ledger-item.flagged .f{opacity:1;}
+  .chk.reviewed[aria-pressed="true"]{border-color:var(--navy);background:var(--navy);color:#fff;}
+  .chk.reviewed[aria-pressed="true"] .bx{background:#fff;border-color:#fff;color:var(--navy);}
+  .chk.agree[aria-pressed="true"]{border-color:var(--ok);background:var(--ok);color:#fff;}
+  .chk.agree[aria-pressed="true"] .bx{background:#fff;border-color:#fff;color:var(--ok);}
+
+  .empty{display:none;text-align:center;color:var(--muted);padding:50px 20px;font-size:14px;}
+  .doc-foot{max-width:1180px;margin:0 auto;padding:20px clamp(16px,4vw,40px) 50px 0;color:var(--muted);font-size:12px;border-top:1px solid var(--hair);}
+
+  .toast{position:fixed;bottom:22px;left:50%;transform:translateX(-50%);background:var(--navy);color:#fff;padding:11px 20px;border-radius:9px;font-size:13px;box-shadow:0 8px 24px rgba(10,30,63,.25);opacity:0;pointer-events:none;transition:opacity .25s;z-index:60;}
+  .toast.show{opacity:1;}
+
+  @media (max-width:880px){
+    .shell{grid-template-columns:1fr;gap:18px;}
+    .ledger{position:static;}
+    .ledger-list{display:flex;overflow-x:auto;-webkit-overflow-scrolling:touch;}
+    .ledger-item{flex:0 0 auto;border-bottom:none;border-right:1px solid var(--hair-2);grid-template-columns:auto 1fr auto;border-left:none;border-top:3px solid transparent;min-height:46px;}
+    .ledger-item.done{border-left-color:transparent;border-top-color:var(--ok);}
+    .ledger-name{max-width:150px;}
+    .mast-meta{text-align:left;}
+  }
+  @media (max-width:560px){
+    .masthead{padding-top:18px;}
+    h1.mast-title{font-size:22px;}
+    .mast-sub{font-size:13.5px;}
+    .mast-meta{min-width:0;}
+    .meter-wrap{gap:12px;}
+    .meter-label{flex:1 0 100%;}
+    .name-input{width:100%;}
+    .mast-actions{width:100%;}
+    .ledger-head{padding-left:0;}
+    .ledger-list{gap:0;}
+    .ledger-item{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:3px;width:52px;min-width:52px;height:52px;padding:6px 4px;}
+    .ledger-num{font-size:14px;}
+    .ledger-name{font-size:0;max-width:none;}
+    .ledger-name .dot{margin:0;width:7px;height:7px;}
+    .ledger-state{gap:2px;}
+    .ledger-item.done{background:#F2FAF6;}
+    .ledger-item.done .ledger-num{color:var(--ok);}
+    .ledger-legend{margin-top:10px;}
+    .toolbar{gap:8px;}
+    .seg{display:flex;width:100%;}
+    .seg button{flex:1;justify-content:center;padding:11px 4px;min-height:44px;font-size:12.5px;}
+    .toggle{width:100%;justify-content:center;min-height:44px;}
+    .seg .full{display:none;}
+    .seg .short{display:inline;}
+    .toolbar-note{display:none;}
+    .card-head{padding:16px 16px 12px;}
+    .card-body{padding:6px 16px 4px;}
+    .flag-row{margin-left:16px;margin-right:16px;}
+    .card-foot{flex-direction:column;align-items:stretch;padding:13px 16px;}
+    .summary-note{max-width:none;order:2;}
+    .acts{order:1;}
+    .chk{flex:1;justify-content:center;min-height:46px;}
+    .btn-ghost{min-height:42px;}
+    .field-intent-text{font-size:15px;}
+  }
+  @media print{
+    .masthead{background:var(--navy)!important;-webkit-print-color-adjust:exact;print-color-adjust:exact;}
+    .toolbar,.ledger,.btn-ghost,.acts,.name-input,.mast-actions{display:none!important;}
+    .shell{display:block;max-width:none;padding:0;}
+    .card{break-inside:avoid;box-shadow:none;border:1px solid #ccc;margin-bottom:14px;}
+    body{background:#fff;}
+  }
+</style>
+</head>
+<body>
+
+<header class="masthead">
+  <div class="mast-top">
+    <div>
+      <span class="brand-mark">ASCEND<span class="pipe">|</span>Mount Sinai</span>
+      <p class="eyebrow">Executive Education Committee · Pre-Meeting Review</p>
+      <h1 class="mast-title">Policy Review Packet</h1>
+      <p class="mast-sub">Sixteen policies under review ahead of the meeting. For each, read the intent, what's changing, and the rationale and implications, and open the full governed text where you want depth. On each card, mark <b>Reviewed — no questions or comments</b> or <b>Reviewed — I have questions/comments</b> to track your own progress (it stays on your screen), and use the comment form to send any question.</p>
+    </div>
+    <div class="mast-meta">
+      <span class="pill">Review window</span><br>
+      <strong>Meeting:</strong> Friday, July 10, 2026<br>
+      <strong>Distributed:</strong> Friday, July 3, 2026<br>
+      <strong>Review closes:</strong> Monday, July 6, 2026, 12:00 noon<br>
+      <strong>Items:</strong> <span id="metaCounts">16</span>
+    </div>
+  </div>
+  <div class="meter-wrap">
+    <div class="meter-label">Reviewed&nbsp; <b id="progNum">0</b> of 16</div>
+    <div class="meter-track" role="progressbar" aria-valuemin="0" aria-valuemax="16" aria-valuenow="0" aria-label="Policies reviewed">
+      <div class="meter-fill" id="meterFill"></div>
+    </div>
+    <div class="agree-stat">Flagged for comment&nbsp; <b id="flagNum">0</b></div>
+    <div class="mast-actions">
+      <a class="btn-ghost" style="text-decoration:none;" href="https://form.jotform.com/261803233560046" target="_blank" rel="noopener">Comment form \u2197</a>
+      <button class="btn-ghost" onclick="window.print()">Print</button>
+    </div>
+    <p class="prevote-note">On each card, choose <b>Reviewed — no questions or comments</b> or <b>Reviewed — I have questions/comments</b>. This is a personal marker that stays on your screen; questions and comments are sent through the comment form. The formal vote is taken at the meeting.</p>
+  </div>
+</header>
+
+<div class="draft-banner">
+  <b>DRAFT — all 16 policies are scheduled for a vote at this meeting.</b> Several have been consolidated or revised; two are new and are brought for discussion and a vote (#13, #14). The rewritten text — with each policy's <b>rationale and implications</b> — is being supplied and will fill those fields below.
+  <ul>
+    <li><b>14 of 16</b> are populated from source (the student handbook, the Technical Standards page, and the admissions LCME Policies &amp; Procedures PDF). <b>2 still need source text:</b> Narrative Assessment (#13) and Student Evaluation Completion (#14) — the two new items.</li>
+    <li><b>Rationale & implications</b> are awaiting the rewritten text on each changed card.</li>
+    <li>Three section deep-links remain auto-generated and flagged to confirm: Grade Appeal (#4), Timeliness (#11), COI (#15).</li>
+  </ul>
+</div>
+
+<main class="shell">
+  <nav class="ledger" aria-label="Policy index">
+    <p class="ledger-head">All 16 policies</p>
+    <ul class="ledger-list" id="ledgerList"></ul>
+    <div class="ledger-legend">
+      <span><i class="dot vote"></i> Vote</span>
+      <span><i class="dot discvote"></i> Discussion + vote</span>
+      <span style="color:var(--ok);">&#10003; Reviewed</span>
+    </div>
+  </nav>
+
+  <div>
+    <div class="toolbar">
+      <div class="seg" role="group" aria-label="Filter policies">
+        <button data-filter="all" aria-pressed="true">All <span class="cnt" data-c="all">16</span></button>
+        <button data-filter="vote" aria-pressed="false"><i class="dot vote"></i><span class="full">Straight to vote</span><span class="short">Vote</span> <span class="cnt" data-c="vote">14</span></button>
+        <button data-filter="discvote" aria-pressed="false"><i class="dot discvote"></i><span class="full">Discussion + vote</span><span class="short">Disc</span> <span class="cnt" data-c="discvote">2</span></button>
+      </div>
+      <button class="toggle" id="outToggle" aria-pressed="false"><span class="bx"></span>To review</button>
+      <div class="toolbar-spacer"></div>
+      <div class="toolbar-note" id="filterNote"></div>
+    </div>
+    <div class="cards" id="cards"></div>
+    <div class="empty" id="empty">No policies match this filter.</div>
+  </div>
+</main>
+
+<footer class="doc-foot">
+  Office of Curricular Affairs · ASCEND Curriculum · Icahn School of Medicine at Mount Sinai. &nbsp;
+  Card summaries aid review; the linked policy is the authoritative version as adopted. Approvals shown as the Executive Oversight Committee (EOC) are the EEC under its former name. The Reviewed tick is a personal marker and is not submitted; the formal vote is taken at the meeting.
+</footer>
+<div class="toast" id="toast">Copied your comments to the clipboard.</div>
+
+<script>
+const HB = "https://ismms-md-program.gitbook.io/medical-student-handbook/policies-and-procedures/md-program-specific-policies-and-procedures/";
+const FORM_URL = "https://form.jotform.com/261803233560046";
+const AUTO = "Section deep-link auto-generated \u2014 confirm or send the exact anchor.";
+const RI_AWAIT = "To be supplied with the rewritten policy \u2014 the rationale for the change and its implications for students, faculty, and operations will appear here for member review.";
+const POLICIES = [
+  {n:1,type:"vote",related:[2,16,11],src:"ok",title:"Advancement / Progression Policy",hbName:"Handbook: Progression Policy (ASCEND)",
+   links:[{l:"Progression Policy (ASCEND)",u:HB+"academic-progress-and-remediation#progression-policy-this-policy-outlines-the-requirements-students-must-complete-to-complete-each-pha"}],
+   intent:"Defines the requirements students must meet to advance through the three ASCEND phases \u2014 Pre-Clerkship, Clerkship, and Integration & Transitions \u2014 toward graduation.",
+   does:["Sets the modules, clerkships, THINQ, PEAKS and transition requirements that must be passed at each phase to advance.","Names the Promotions Committee as the body that evaluates readiness to progress and acts on failures.","Requires students to meet MD Program Technical Standards at each phase.","Ties failures to the phase-specific Remediation Policy, with possible timeline change, probation, suspension, or dismissal."],
+   gov:"<b>Approved by</b> Executive Education Committee &middot; <b>7/11/25</b><br><b>LCME</b> 9.9 Student Advancement & Appeal; 10.3 Student Selection/Progress",
+   changing:"Handbook shows EEC approval 7/11/25; no later revision listed. Confirm whether any textual change is proposed for this review."},
+
+  {n:2,type:"vote",related:[1,3,6,11],src:"ok",title:"Academic Remediation Policy",hbName:"Handbook: Remediation Policy \u2013 Phase 1 (ASCEND)",
+   links:[{l:"Remediation Policy \u2013 Phase 1 (ASCEND)",u:HB+"academic-progress-and-remediation#remediation-policy-phase-1-policy-this-policy-includes-information-about-remediation-for-phase-1-of"}],
+   intent:"Defines the structured remediation process when a student receives a failing grade in a Phase 1 module, supporting mastery while upholding standards and progression timelines.",
+   does:["Requires a structured remediation plan built by the Module Director with OCA, aligned to the module's learning objectives.","Applies to graded modules only (not completion-based requirements), within the academic-calendar timeline.","Records the original Fail plus a second Pass entry on the transcript on successful remediation.","Refers any Phase 1 module failure to the Promotions Committee; failed remediation returns to that committee."],
+   gov:"<b>Approved by</b> Executive Education Committee &middot; <b>6/6/25</b><br><b>LCME</b> 9.6 Setting Standards of Achievement; 10.3 Student Selection/Progress",
+   changing:"This is Phase 1 only \u2014 Phase 2 and Phase 3 remediation are governed by separate policies. Confirm the intended scope for this review (a possible consolidation point)."},
+
+  {n:3,type:"vote",related:[1,2,6,11],src:"ok",title:"Grading Policy",hbName:"Handbook: Grading Policy \u2013 Phase 1 & Phase 2 (ASCEND)",
+   links:[{l:"Grading Policy \u2013 Phase 1",u:HB+"assessment-and-grading#grading-policy-phase-1-this-policy-includes-information-about-grading-in-phase-1-of-the-ascend-curri"},{l:"Grading Policy \u2013 Phase 2",u:HB+"assessment-and-grading#grading-policy-phase-2-this-policy-includes-information-about-grading-in-the-phase-2-of-the-ascend-c"}],
+   intent:"Establishes Pass/Fail grading for ASCEND Phase 1 modules \u2014 and Honors/Pass/Fail for Phase 2 clerkships \u2014 and how the passing criterion is set and reported.",
+   does:["Grades Phase 1 modules Pass/Fail, with the passing cutoff defined in each Module Information Sheet.","Reports grades from OCA to the Registrar; a successful remediation generates a separate Pass.","(Phase 2) grades clerkships Honors/Pass/Fail on a criterion-based rubric, with narrative feedback feeding the MSPE."],
+   gov:"<b>Approved by</b> Executive Education Committee &middot; Phase 1 <b>5/17/24</b>; Phase 2 <b>5/5/25</b><br><b>LCME</b> 9.6 Setting Standards of Achievement",
+   changing:"Two ASCEND grading policies exist \u2014 Phase 1 (EEC 5/17/24) and Phase 2 (EEC 5/5/25). The timeliness-of-grades content has been split out into its own standalone policy (see #11). Confirm whether Phase 1 and Phase 2 are being consolidated here."},
+
+  {n:4,type:"vote",related:[1,2,11],src:"ok",title:"Grade Appeal Policy",hbName:"Handbook: Grades Appeals Policy",
+   links:[{l:"Grades Appeals Policy",u:HB+"assessment-and-grading#grades-appeals-policy-this-policy-includes-information-about-how-to-appeal-a-final-grade-or-narrativ"}],linkNote:AUTO,
+   intent:"Gives students a defined, time-bound process to appeal a final grade, reviewed by a faculty Grade Appeal Committee drawn from outside module/clerkship leadership.",
+   does:["Allows appeal within 30 days of grade release, on grounds of computation error, unequal application of standards, or unannounced changes to stated grading.","Routes appeals through the Office of Assessment & Evaluation to a Grade Appeal Committee convened by the AES Subcommittee Chair.","Requires a decision within 90 days; the committee's decision is final."],
+   gov:"<b>Approved by</b> Executive Oversight Committee &middot; <b>8/5/2025</b> (revised Aug 2025)<br><b>LCME</b> 9.9 Student Advancement & Appeal; 11.6 Access to Educational Records",
+   changing:"Handbook marks this Revised August 2025. Confirm whether the August 2025 revision is what's being brought, or a further change."},
+
+  {n:5,type:"vote",related:[1],src:"ok",title:"Technical Standards Policy",hbName:"Mount Sinai: Technical Standards for the MD Program",
+   links:[{l:"Technical Standards \u2014 MD Program (icahn.mssm.edu)",u:"https://icahn.mssm.edu/education/medical/technical-standards"}],
+   intent:"States the non-academic abilities a student must demonstrate, with or without accommodation, for admission, retention, promotion, and graduation from the MD program.",
+   does:["Defines five domains of required ability: Communication; Motor; Intellectual / Conceptual / Integrative / Quantitative; Behavioral & Social; and Ethics & Professionalism.","Applies as a requirement for admission, retention, promotion, and graduation, completed within an appropriate timeframe.","Requires abilities to be met with or without reasonable accommodation; the Student Disability Office is the sole office that reviews and approves accommodations."],
+   gov:"<b>Maintained as</b> an MD Program / institutional standard, aligned to LCME accreditation. Reviewed via the Office of Curricular Affairs with the Student Disability Office. <i>Approval dates not published on the page \u2014 confirm from the policy record.</i>",
+   changing:"Hosted on the institutional site rather than the student handbook. Confirm the approving body and date for the EEC record."},
+
+  {n:6,type:"vote",related:[1,7],src:"ok",title:"Attendance Policy",hbName:"Handbook: Phase 2 & 3 and Pre-Clerkship Attendance Policies",
+   links:[{l:"Pre-Clerkship Attendance Policy",u:HB+"attendance-standards#pre-clerkship-attendance-policy-this-policy-outlines-attendance-requirements-for-absences-in-the-pre"},{l:"Phase 2 & 3 Attendance & Absence Policy",u:HB+"attendance-standards#phase-2-and-3-attendance-and-absence-policy-this-policy-outlines-attendance-requirements-and-procedu"}],
+   intent:"Sets attendance expectations and the absence-request process across the curriculum, defining excused vs. unexcused absences and their consequences.",
+   does:["Requires attendance at all required sessions; planned absences requested in advance (28 days in Phase 2/3; a 5 personal-day system in Pre-Clerkship).","Lists approved excused-absence reasons and designates \u201Crestricted days\u201D (e.g., exams, transitions, PEAKS) when absences can't be approved.","Requires make-up of missed required activities per the Module/Clerkship Information Sheet.","Escalates unexcused absences to academic monitoring / intensive academic monitoring."],
+   gov:"<b>Approved by</b> Phase 2 & 3: Executive Education Committee &middot; <b>12/5/2025</b>. Pre-Clerkship: Executive Oversight Committee &middot; <b>7/12/24</b> (clarified 7/31/25)<br><b>LCME</b> 12.4 Student Access to Health Care Services",
+   changing:"The Phase 2 & 3 policy is newly approved (EEC 12/5/2025); the Pre-Clerkship policy had non-substantive clarifications 7/31/2025. Confirm whether these are being consolidated."},
+
+  {n:7,type:"vote",related:[1,6],src:"ok",title:"Leave of Absence (LOA) Policy",hbName:"Handbook: Leave of Absence Policy",
+   links:[{l:"Leave of Absence Policy",u:HB+"attendance-standards#leave-of-absence-policy-this-policy-outlines-all-details-related-to-various-types-of-medical-student"}],
+   intent:"Defines the types of leave of absence, how they are requested and granted, and the conditions and process for returning to the program.",
+   does:["Defines student-initiated leaves (Personal, Medical, Educational, Military) and a school-initiated Administrative leave.","Routes all LOA requests through the Office of Student Affairs; some extensions go to the Promotions Committee.","Spells out implications (transcript/MSPE notation, financial aid, insurance, housing, malpractice coverage) and the return-from-leave requirements."],
+   gov:"<b>Approved by</b> Executive Oversight Committee &middot; <b>6/7/2024</b><br><b>LCME</b> 9.9 Student Advancement & Appeal; 11.0 Academic Support & Educational Records",
+   changing:"Handbook shows EOC approval 6/7/2024; no later revision listed. Confirm whether any change is proposed."},
+
+  {n:8,type:"vote",src:"ok",title:"Characteristics of Accepted Applicants",hbName:"Admissions: LCME Policies & Procedures (MD Program Admissions)",
+   links:[{l:"MD Program Admissions \u2014 LCME Policies & Procedures (PDF)",u:"https://icahn.mssm.edu/files/ISMMS/Assets/Education/Admissions/MD-Program-Admissions/ISMMS-LCME-Policies-and-Procedures.pdf"}],linkNote:"See the \u201CCharacteristics of Accepted Applicants\u201D policy within the PDF.",
+   intent:"Structures applicant screening, interviewing, and evaluation so the Admissions Committee selects applicants whose academic skills and personal attributes predict success in medical school.",
+   does:["Defines a list of personal attributes weighed at screening, interview, and ranking.","Reviews those attributes annually, informed by students\u2019 academic outcomes.","Keeps the attribute list embedded in the screening and interview forms and in Admissions Committee training."],
+   gov:"<b>Approved by</b> Selections Subcommittee of the MD Admissions Committee &middot; <b>Reviewed by</b> the EEC (formerly the Executive Oversight Committee) annually &middot; Effective AY 2025\u201326<br><b>LCME</b> 10.4 Characteristics of Accepted Applicants",
+   changing:"Owned by Admissions: final approval rests with the Admissions Selections Subcommittee; the EEC reviews and endorses it. Brought to the EEC for a vote of endorsement."},
+
+  {n:9,type:"vote",src:"ok",title:"Student Work Hours",hbName:"Handbook: Pre-Clerkship Contact Hours & Clinical (Phase 2/3) Work Hours",
+   links:[{l:"Pre-Clerkship Contact Hours Policy",u:HB+"student-work-hours#pre-clerkship-contact-hours-policy-this-policy-outlines-the-instructional-time-limitations-for-precl"},{l:"Clinical (Phase 2/3) Student Work Hours Policy",u:HB+"student-work-hours#clinical-student-work-hours-policy-this-policy-outlines-the-instructional-time-limitations-for-clini"}],
+   intent:"Limits scheduled instructional time and clinical duty hours to protect time for independent study and student wellbeing.",
+   does:["Caps Pre-Clerkship scheduled learning at 27 hrs/week and assigned activity at 40 hrs/week, averaged over the module.","Caps clinical (Phase 2/3) duty hours at 80/week averaged over the clerkship, with minimum time off and call / night-float limits.","Monitors workload via module evaluations (to EOC) and end-of-clerkship duty-hour reports (CCS quarterly; EOC yearly)."],
+   gov:"<b>Approved by</b> Executive Oversight Committee &middot; Pre-Clerkship Contact Hours <b>5/17/24</b><br><b>LCME</b> 8.8 Monitoring Student Time",
+   changing:"Confirm whether the clinical work-hours policy has an ASCEND-specific version, or whether the version on file (written for the legacy classes) is being carried forward / revised for ASCEND."},
+
+  {n:10,type:"vote",src:"ok",title:"Pre-Med Requirements",hbName:"Admissions: LCME Policies & Procedures (MD Program Admissions)",
+   links:[{l:"MD Program Admissions \u2014 LCME Policies & Procedures (PDF)",u:"https://icahn.mssm.edu/files/ISMMS/Assets/Education/Admissions/MD-Program-Admissions/ISMMS-LCME-Policies-and-Procedures.pdf"}],linkNote:"See the \u201CPre-Medical Requirements\u201D policy within the PDF.",
+   intent:"Sets the foundational premedical coursework required for admission, so applicants are prepared for the rigor of medical education alongside a broad undergraduate education.",
+   does:["Requires minimum coursework: General Chemistry (1 yr), Organic Chemistry (1 sem), Biochemistry (1 sem), Biology (1 yr), Physics (1 sem), Lab (1 yr Bio/Chem), Statistics (1 sem; Biostatistics preferred), and intensive writing / English (1 yr).","Suggests exposure to social determinants of health (e.g., sociology, public health, bioethics).","Is reviewed by a Pre-Medical Requirements Working Group at least every three years; students document completion before matriculation."],
+   gov:"<b>Approved by</b> Selections Subcommittee of the MD Admissions Committee <b>and the EEC</b> (formerly the Executive Oversight Committee) &middot; Effective AY 2025\u201326<br><b>LCME</b> 10.1 Premedical Education / Required Coursework",
+   changing:"The EEC is a co-approving body, so this comes to the EEC for a vote. Confirm whether any change to the required coursework is proposed this cycle."},
+
+  {n:11,type:"vote",related:[2,3],src:"ok",title:"Timeliness of Grades Policy",hbName:"New standalone \u2014 previously within the Grading Policy",
+   links:[{l:"Final Grade Submission Policy (current location)",u:HB+"assessment-and-grading#final-grade-submission-policy-this-policy-includes-information-about-the-timely-submission-of-final"}],linkNote:"Now a standalone policy, previously part of Grading. "+AUTO,
+   intent:"Requires final grades to be reported to the Registrar within a set time of a course or rotation ending.",
+   does:["Requires final grades for all modules, courses, clerkships, acting internships, and electives within six (6) weeks of the end of the course/rotation.","Releases grades to students through the student information system."],
+   gov:"<b>Approved by</b> Executive Oversight Committee &middot; <b>4/19/24</b> (as the Final Grade Submission Policy)<br><b>LCME</b> 9.8 Fair and Timely Summative Assessment",
+   changing:"Being established as a standalone policy, split out of the Grading Policy. Confirm the standalone title, scope, and approving body for the EEC record."},
+
+  {n:12,type:"vote",related:[13],src:"ok",title:"Module / Clerkship (MM/C) Feedback Policy",hbName:"Handbook: Formative Feedback Policy",
+   links:[{l:"Formative Feedback Policy",u:HB+"assessment-and-grading#formative-feedback-policy-this-policy-includes-information-about-formative-feedback-requirements-for"}],
+   intent:"Requires that every student receive formal formative feedback by at least the midpoint of each module/course or clerkship.",
+   does:["Requires mid-point formative feedback in each module/course; directors set the timing and method.","Requires mid-clerkship feedback that also reviews progress on the Required Clinical Experience (RCE) log.","Monitors compliance via end-of-clerkship evaluations and external surveys (e.g., AAMC GQ), confirmed at annual course/clerkship review."],
+   gov:"<b>Approved by</b> Executive Oversight Committee &middot; <b>4/19/24</b> (rev 5/5/23)<br><b>LCME</b> 8.6 Completion of Core Experiences; 9.7 Formative Assessment & Feedback",
+   changing:"Confirm that \u201CMM/C Feedback\u201D maps to this Formative Feedback Policy (mid-module / mid-clerkship feedback). Handbook shows EOC approval 4/19/24."},
+
+  {n:13,type:"discvote",related:[12],src:"warn",title:"Narrative Assessment Policy",hbName:"No standalone policy found in the handbook",proposed:true,
+   links:[{l:"Assessment & Grading page (related provisions)",u:HB+"assessment-and-grading"}],
+   intent:"Governs the narrative (written) assessment students receive and how it is used (e.g., feeding the MSPE).",
+   does:["No standalone \u201CNarrative Assessment Policy\u201D was located in the handbook.","Related provisions appear in the Formative Feedback Policy and the Grades & Transcripts Policy (clinical narratives feed the MSPE; narratives are not on the transcript)."],
+   gov:"",changing:"",
+   why:"New standalone policy \u2014 brought to the EEC for discussion and a vote. Source text to follow; the linked Assessment & Grading page holds the closest current provisions.",
+   flag:"New item \u2014 awaiting the source text. Once provided, the intent, what-it-does, and rationale & implications will be populated.",
+   awaitFull:"Source text to follow. The linked Assessment & Grading page holds the closest related provisions."},
+
+  {n:14,type:"discvote",src:"warn",title:"Student Evaluation Completion Policy",hbName:"New \u2014 not yet in the published handbook",proposed:true,isNew:true,
+   intent:"Sets expectations for students' completion of required course / teaching evaluations.",
+   does:["New policy \u2014 not yet published in the handbook.","Once drafted, confirm: which evaluations are required, completion timing, and any holds or consequences for non-completion."],
+   gov:"",changing:"",why:"New policy \u2014 brought to the EEC for discussion and a vote. Awaiting the source text before this card can be populated.",
+   awaitFull:"New policy \u2014 not yet published. Provide the draft text to embed or link."},
+
+  {n:15,type:"vote",related:[1,2,6,11],src:"ok",title:"Conflict of Interest in Student Assessment",hbName:"Handbook: Addressing COI in Student Assessment Policy",
+   links:[{l:"Addressing COI in Student Assessment Policy",u:HB+"assessment-and-grading#addressing-conflicts-of-interest-in-student-assessment-policy-this-policy-seeks-to-mitigate-the-impa"}],linkNote:AUTO,
+   intent:"Mitigates the impact of dual relationships and conflicts of interest between students and those who assess them, to protect the objectivity of assessment and promotion.",
+   does:["Defines what constitutes a COI (personal/family/provider-patient relationships, advisor roles, financial ties, prior adverse actions, mistreatment reports).","Requires faculty, instructors, and residents with a known COI to recuse from assessing that student; students may request an alternative assignment.","Provides reporting forms and pre-clerkship and clinical-rotation procedures (rosters circulated, opt-outs, nullified evaluations where COI is flagged)."],
+   gov:"<b>Approved by</b> Executive Oversight Committee &middot; <b>8/4/2023; 7/12/2024</b><br><b>LCME</b> 1.2 Conflict of Interest; 11.1 Academic Advising; 12.5 Non-Involvement of Health Providers in Assessment",
+   changing:"Handbook shows two approval dates (8/4/2023; 7/12/2024). Confirm whether a further revision is being brought."},
+
+  {n:16,type:"vote",related:[1],src:"ok",title:"Elective Requirements",hbName:"Handbook: Electives Policy (ASCEND)",
+   links:[{l:"Electives Policy (ASCEND)",u:HB+"academic-progress-and-remediation#electives-policy-this-policy-describes-the-required-number-of-electives-a-student-must-complete-in-o"}],
+   intent:"Defines the elective experiences students must complete to graduate, and how electives are planned, approved, and assessed.",
+   does:["Requires 20 weeks of electives across Phases 2\u20133 (\u226514 clinical, including \u22654 weeks in a medicine subspecialty or critical care), with variations for certain MD/PhD and InterACT students.","Requires an elective plan submitted to OCA ~2 weeks before the elective period, with defined competencies and assessment per elective.","Limits service/longitudinal electives to 4 weeks and sets documentation and submission deadlines."],
+   gov:"<b>Approved by</b> Executive Oversight Committee &middot; <b>5/17/24</b><br><b>LCME</b> 9.9 Student Advancement & Appeal",
+   changing:"Handbook shows EOC approval 5/17/24; no later revision listed. Confirm whether any change is proposed (e.g., the 20-week requirement)."},
+];
+
+const reviewState = {};  // n -> "clear" | "flag"
+let activeFilter = "all";
+let outstandingOnly = false;
+const comments = {};
+const cardsEl = document.getElementById('cards');
+const ledgerEl = document.getElementById('ledgerList');
+const voteCount = POLICIES.filter(p=>p.type==="vote").length;
+
+function tags(p){
+  let v = '<span class="tag vote">Vote</span>';
+  if(p.type==="discvote") v = '<span class="tag disc">For discussion</span>' + v;
+  let s;
+  if(p.src==="ok") s='<span class="tag src-ok">Sourced</span>';
+  else if(p.isNew) s='<span class="tag src-warn">New \u2014 unpublished</span>';
+  else s='<span class="tag src-warn">Source needed</span>';
+  return v + s;
+}
+
+function card(p){
+  const isVote = (p.type==="vote" || p.type==="discvote");
+  const isDisc = (p.type==="discvote");
+  const propChip = p.proposed ? ' <span class="chip-prop">Unconfirmed</span>' : '';
+  const does = p.does.map(d=>`<li>${d}</li>`).join("");
+  const flag = p.flag ? `<div class="flag-row"><b>Flag \u2014</b> ${p.flag}</div>` : "";
+  let askedText;
+  if(isDisc){ askedText = `<b>Discussion, then a vote:</b> this new policy is brought to the EEC for discussion and a vote to approve.${p.src==="ok"?"":" Source text to follow."}`; }
+  else { askedText = `<b>For a vote:</b> the EEC is asked to approve the policy as presented.`; }
+
+  const govField = p.gov ? `<div class="field"><p class="field-label">Governance & approval</p><div class="gov">${p.gov}</div></div>` : "";
+
+  // what's changing / why
+  let changeInner;
+  if(p.why){ changeInner = `<div class="await"><span class="ic">\u2295</span><span>${p.why}</span></div>`; }
+  else if(p.changing){ changeInner = `<p class="changing-text">${p.changing}</p>`; }
+  else { changeInner = `<div class="await"><span class="ic">\u2295</span><span>Awaiting confirmation of what (if anything) is changing for this review.</span></div>`; }
+  const changeLabel = p.isNew ? "Why now" : "What's changing";
+
+  // rationale & implications (awaiting rewritten text unless provided)
+  let ri;
+  if(p.rationale || p.implications){
+    ri = `${p.rationale?`<p><span class="sub">Rationale:</span> ${p.rationale}</p>`:""}${p.implications?`<p><span class="sub">Implications:</span> ${p.implications}</p>`:""}`;
+  } else {
+    ri = `<div class="await"><span class="ic">\u2295</span><span>${RI_AWAIT}</span></div>`;
+  }
+
+  // full text links
+  let fullInner;
+  if(p.links && p.links.length){
+    const linksHtml = p.links.map(x=>`<a class="src-link" href="${x.u}" target="_blank" rel="noopener">${x.l} \u2197</a>`).join("");
+    const base = (p.src==="ok") ? `${p.hbName}. The linked policy is the authoritative version as adopted.` : `${p.awaitFull||""}`;
+    const note = base + (p.linkNote ? (" "+p.linkNote) : "");
+    fullInner = `<div class="src-links">${linksHtml}</div><p class="src-note">${note}</p>`;
+  } else {
+    fullInner = `<div class="await"><span class="ic">\u2295</span><span>${p.awaitFull||"Source not yet provided."}</span></div>`;
+  }
+
+  const agreeBtn = "";
+
+  return `
+  <article class="card" id="card-${p.n}" data-type="${p.type}">
+    <div class="card-head">
+      <span class="card-num">${p.n}</span>
+      <div class="card-titles">
+        <h2 class="card-title">${p.title}</h2>
+        <p class="card-sub">${p.hbName}</p>
+        <div class="tags">${tags(p)}</div>
+      </div>
+    </div>
+    ${flag}
+    <div class="card-body">
+      <div class="field intent">
+        <p class="field-label">Intent${propChip}</p>
+        <p class="field-intent-text">${p.intent}</p>
+      </div>
+      <div class="field">
+        <p class="field-label">What it does${propChip}</p>
+        <ul class="does">${does}</ul>
+      </div>
+      <div class="field change">
+        <p class="field-label">${changeLabel}</p>
+        ${changeInner}
+      </div>
+      <div class="field">
+        <p class="field-label">Rationale & implications of the change</p>
+        <div class="ri">${ri}</div>
+      </div>
+      ${govField}
+      <div class="field">
+        <p class="field-label">What the EEC is asked to do</p>
+        <div class="asked ${isDisc?'disc':''}">${askedText}</div>
+      </div>
+      ${(p.related&&p.related.length)?`<div class="field"><p class="field-label">Related in this packet</p><div class="related">${p.related.map(r=>`<button class="relchip" data-rel="${r}">#${r} ${POLICIES.find(q=>q.n===r).title}</button>`).join("")}</div></div>`:""}
+      <details class="fulltext">
+        <summary><span class="chev">\u25B6</span> Full policy text (authoritative)</summary>
+        <div class="fulltext-body">${fullInner}</div>
+      </details>
+      <div class="cmtcta" id="cta-${p.n}" hidden><a class="cmtbtn" href="${FORM_URL}" target="_blank" rel="noopener">Open the comment form \u2197</a><span class="cmtcta-note">Select this policy (#${p.n}) in the form.</span></div>
+    </div>
+    <div class="card-foot">
+      <p class="summary-note">Read the card, then record your review:</p>
+      <div class="acts">
+        <button class="rv rv-clear" data-n="${p.n}" aria-pressed="false"><span class="bx">\u2713</span>Reviewed \u2014 no questions or comments</button>
+        <button class="rv rv-flag" data-n="${p.n}" aria-pressed="false"><span class="bx">?</span>Reviewed \u2014 I have questions/comments</button>
+      </div>
+    </div>
+  </article>`;
+}
+
+function ledger(p){
+  return `<li><button class="ledger-item" data-jump="${p.n}" id="led-${p.n}">
+    <span class="ledger-num">${p.n}</span>
+    <span class="ledger-name"><i class="dot ${p.type}"></i> ${p.title}</span>
+    <span class="ledger-state"><span class="f">?</span><span class="r">&#10003;</span></span></button></li>`;
+}
+
+cardsEl.innerHTML = POLICIES.map(card).join("");
+ledgerEl.innerHTML = POLICIES.map(ledger).join("");
+
+cardsEl.addEventListener('click', e=>{
+  const btn = e.target.closest('.rv'); if(!btn) return;
+  const n=+btn.dataset.n;
+  const want = btn.classList.contains('rv-flag') ? 'flag' : 'clear';
+  if(reviewState[n]===want){ delete reviewState[n]; }
+  else {
+    reviewState[n]=want;
+  }
+  syncCard(n); prog();
+});
+
+function syncCard(n){
+  const st=reviewState[n];
+  const c=document.getElementById('card-'+n), l=document.getElementById('led-'+n);
+  const cb=c.querySelector('.rv-clear'), fb=c.querySelector('.rv-flag');
+  cb.setAttribute('aria-pressed', st==='clear'?'true':'false');
+  fb.setAttribute('aria-pressed', st==='flag'?'true':'false');
+  c.classList.toggle('done', !!st);
+  l.classList.toggle('done', !!st);
+  l.classList.toggle('flagged', st==='flag');
+  const cta=document.getElementById('cta-'+n); if(cta) cta.hidden = (st!=='flag');
+}
+
+ledgerEl.addEventListener('click', e=>{const b=e.target.closest('[data-jump]');if(!b)return;document.getElementById('card-'+b.dataset.jump).scrollIntoView({block:'start'});});
+cardsEl.addEventListener('click', e=>{const r=e.target.closest('.relchip'); if(!r) return; document.getElementById('card-'+r.dataset.rel).scrollIntoView({block:'start'});});
+cardsEl.addEventListener('input', e=>{const t=e.target.closest('textarea[data-n]'); if(!t) return; const n=+t.dataset.n; const v=t.value.trim(); if(v) comments[n]=v; else delete comments[n];});
+document.getElementById('outToggle').addEventListener('click', function(){ outstandingOnly=!outstandingOnly; this.setAttribute('aria-pressed', outstandingOnly?'true':'false'); filter(); });
+document.querySelectorAll('.seg button').forEach(b=>b.addEventListener('click',()=>{activeFilter=b.dataset.filter;document.querySelectorAll('.seg button').forEach(x=>x.setAttribute('aria-pressed',x===b?'true':'false'));filter();}));
+
+function filter(){
+  let shown=0;
+  POLICIES.forEach(p=>{const c=document.getElementById('card-'+p.n),l=document.getElementById('led-'+p.n);
+    let vis=(activeFilter==="all"||activeFilter===p.type);
+    if(vis && outstandingOnly && reviewState[p.n]) vis=false;
+    c.style.display=vis?'':'none';l.parentElement.style.display=vis?'':'none';if(vis)shown++;});
+  document.getElementById('empty').style.display=shown?'none':'block';
+  const map={vote:"Showing the items going straight to a vote.",discvote:"Showing the new items brought for discussion and a vote."};
+  let note=activeFilter==="all"?"":(map[activeFilter]||"");
+  if(outstandingOnly) note=(note?note+" ":"")+"Not yet reviewed only.";
+  document.getElementById('filterNote').textContent=note;
+}
+function prog(){
+  const keys=Object.keys(reviewState);
+  const r=keys.length;
+  const fl=keys.filter(n=>reviewState[n]==='flag').length;
+  document.getElementById('progNum').textContent=r;
+  document.getElementById('flagNum').textContent=fl;
+  document.getElementById('meterFill').style.width=(r/16*100)+'%';
+  document.querySelector('.meter-track').setAttribute('aria-valuenow',r);
+}
+
+function copyResponses(){
+  const name=document.getElementById('memberName').value.trim();
+  const byN=n=>POLICIES.find(p=>p.n===n);
+  const cnotes=Object.keys(comments).map(Number).sort((a,b)=>a-b);
+  let t="EEC Policy Review \u2014 comments & questions\n";
+  if(name) t+="From: "+name+"\n";
+  t+="Date: "+new Date().toLocaleDateString()+"\n\n";
+  if(cnotes.length){ cnotes.forEach(n=>{ t+="#"+n+" "+byN(n).title+":\n  "+comments[n]+"\n\n"; }); }
+  else { t+="(No comments entered yet \u2014 add a note or question on any card, then copy.)\n\n"; }
+  t+="\u2014 Comments and questions only; the formal vote is taken at the meeting.";
+  const done=()=>showToast("Copied your comments \u2014 paste into your email/Teams to OCA.");
+  if(navigator.clipboard && navigator.clipboard.writeText){
+    navigator.clipboard.writeText(t).then(done,()=>fallbackCopy(t,done));
+  } else { fallbackCopy(t,done); }
+}
+function fallbackCopy(t,done){
+  const ta=document.createElement('textarea'); ta.value=t; ta.style.position='fixed'; ta.style.opacity='0';
+  document.body.appendChild(ta); ta.select();
+  try{document.execCommand('copy'); done();}catch(e){ showToast("Couldn't copy automatically \u2014 select and copy manually."); }
+  document.body.removeChild(ta);
+}
+let toastT;
+function showToast(msg){
+  const el=document.getElementById('toast'); el.textContent=msg; el.classList.add('show');
+  clearTimeout(toastT); toastT=setTimeout(()=>el.classList.remove('show'),2600);
+}
+
+(function init(){
+  const cnt={all:POLICIES.length,vote:0,discvote:0};
+  POLICIES.forEach(p=>cnt[p.type]++);
+  document.querySelectorAll('.cnt[data-c]').forEach(el=>{el.textContent=cnt[el.dataset.c];});
+  document.getElementById('metaCounts').innerHTML='all 16 to a vote \u00B7 <span style="color:#C9B6F0;">'+cnt.discvote+' also for discussion</span>';
+})();
+</script>
+</body>
+</html>
