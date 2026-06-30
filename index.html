@@ -167,6 +167,14 @@
   .src-link:hover{background:#F7F9FC;border-color:var(--cyan);}
   .src-links{display:flex;flex-direction:column;gap:8px;align-items:flex-start;}
   .src-note{font-size:12px;color:var(--muted);margin:8px 0 14px;}
+  .src-link.review{border-color:#F0CBE3;color:var(--magenta);}
+  .src-link.review:hover{background:#FDF2F8;border-color:var(--magenta);}
+  .ver-block{margin:0 0 16px;}
+  .ver-block:last-child{margin-bottom:2px;}
+  .ver-label{font-size:10.5px;text-transform:uppercase;letter-spacing:.1em;font-weight:800;margin:0 0 9px;display:flex;align-items:center;gap:8px;}
+  .ver-label::before{content:"";width:9px;height:9px;border-radius:2px;background:currentColor;flex:none;}
+  .ver-label.ver-current{color:#0E6A80;}
+  .ver-label.ver-review{color:var(--magenta);}
 
   .card-foot{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:13px 20px;background:#FBFCFE;border-top:1px solid var(--hair-2);flex-wrap:wrap;}
   .summary-note{font-size:12px;color:var(--muted);max-width:40ch;}
@@ -267,7 +275,7 @@
       <span class="pill">Review window</span><br>
       <strong>Meeting:</strong> Friday, July 10, 2026<br>
       <strong>Distributed:</strong> Thursday, July 3, 2026<br>
-      <strong>Review closes:</strong> Monday, July 6, 2026, 12:00 noon<br>
+      <strong>Review closes:</strong> Thursday, July 9, 2026, 12:00 noon<br>
       <strong>Items:</strong> <span id="metaCounts">16</span>
     </div>
   </div>
@@ -491,16 +499,26 @@ function card(p){
     ri = `<div class="await"><span class="ic">\u2295</span><span>${RI_AWAIT}</span></div>`;
   }
 
-  // full text links
-  let fullInner;
+  // full policy text — current version + version under review
+  let currentInner;
   if(p.links && p.links.length){
     const linksHtml = p.links.map(x=>`<a class="src-link" href="${x.u}" target="_blank" rel="noopener">${x.l} \u2197</a>`).join("");
-    const base = (p.src==="ok") ? `${p.hbName}. The linked policy is the authoritative version as adopted.` : `${p.awaitFull||""}`;
+    const base = (p.src==="ok") ? `${p.hbName}.` : `${p.awaitFull||""}`;
     const note = base + (p.linkNote ? (" "+p.linkNote) : "");
-    fullInner = `<div class="src-links">${linksHtml}</div><p class="src-note">${note}</p>`;
+    currentInner = `<div class="src-links">${linksHtml}</div><p class="src-note">${note}</p>`;
+  } else if(p.isNew){
+    currentInner = `<div class="await"><span class="ic">\u2295</span><span>New policy \u2014 there is no current version in effect.</span></div>`;
   } else {
-    fullInner = `<div class="await"><span class="ic">\u2295</span><span>${p.awaitFull||"Source not yet provided."}</span></div>`;
+    currentInner = `<div class="await"><span class="ic">\u2295</span><span>${p.awaitFull||"No current standalone policy located."}</span></div>`;
   }
+  let reviewInner;
+  if(p.reviewLinks && p.reviewLinks.length){
+    const rl = p.reviewLinks.map(x=>`<a class="src-link review" href="${x.u}" target="_blank" rel="noopener">${x.l} \u2197</a>`).join("");
+    reviewInner = `<div class="src-links">${rl}</div>${p.reviewNote?`<p class="src-note">${p.reviewNote}</p>`:""}`;
+  } else {
+    reviewInner = `<div class="await"><span class="ic">\u2295</span><span>The version under review will be linked here once the rewritten text is supplied.</span></div>`;
+  }
+  const fullInner = `<div class="ver-block"><p class="ver-label ver-current">Current policy \u2014 in effect</p>${currentInner}</div><div class="ver-block"><p class="ver-label ver-review">Policy under review \u2014 proposed</p>${reviewInner}</div>`;
 
   const agreeBtn = "";
 
@@ -541,7 +559,7 @@ function card(p){
       <details class="fulltext">
         <summary>
           <span class="ft-ic" aria-hidden="true">\u2261</span>
-          <span class="ft-text"><span class="ft-label-todo">Read the full policy text</span><span class="ft-label-done">Full policy text \u2014 opened</span></span>
+          <span class="ft-text"><span class="ft-label-todo">Read the policy text \u2014 current &amp; under review</span><span class="ft-label-done">Policy text \u2014 opened</span></span>
           <span class="ft-pill todo">Authoritative \u00B7 please read</span>
           <span class="ft-pill done">Opened \u2713</span>
           <span class="chev">\u25B6</span>
