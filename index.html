@@ -144,12 +144,25 @@
   .await{border:1px dashed var(--await-bd);background:var(--await-bg);color:var(--await-tx);border-radius:8px;padding:11px 13px;font-size:13px;margin-top:2px;display:flex;gap:9px;align-items:flex-start;}
   .await .ic{font-weight:700;flex:none;}
 
-  details.fulltext{margin:4px 0 0;border-top:1px solid var(--hair-2);}
-  details.fulltext summary{list-style:none;cursor:pointer;font-size:13px;font-weight:600;color:var(--navy-2);padding:13px 0 12px;display:flex;align-items:center;gap:8px;}
+  details.fulltext{margin:12px 0 2px;}
+  details.fulltext summary{list-style:none;cursor:pointer;display:flex;align-items:center;gap:10px;padding:12px 14px;border:1px solid #BBE3EC;border-left:4px solid var(--cyan);background:var(--fyi-bg);border-radius:9px;font-weight:700;font-size:13.5px;color:#0E6A80;}
   details.fulltext summary::-webkit-details-marker{display:none;}
-  details.fulltext summary .chev{transition:transform .2s;font-size:11px;color:var(--muted);}
-  details.fulltext[open] summary .chev{transform:rotate(90deg);}
-  .fulltext-body{margin:0 0 14px;}
+  details.fulltext summary:hover{background:#DCEFF4;}
+  details.fulltext .ft-ic{font-size:15px;color:var(--cyan);flex:none;line-height:1;}
+  details.fulltext .ft-text{flex:1;}
+  details.fulltext .ft-pill{font-size:9.5px;font-weight:800;letter-spacing:.06em;text-transform:uppercase;border-radius:4px;padding:3px 8px;white-space:nowrap;flex:none;}
+  details.fulltext .ft-pill.todo{background:#fff;border:1px solid var(--cyan);color:#0E6A80;}
+  details.fulltext .ft-pill.done{background:var(--ok);color:#fff;}
+  details.fulltext .chev{transition:transform .2s;font-size:11px;color:var(--muted);flex:none;}
+  details.fulltext[open] .chev{transform:rotate(90deg);}
+  details.fulltext .ft-label-done,details.fulltext .ft-pill.done{display:none;}
+  details.fulltext.opened summary{background:#ECF7F0;border-color:#CFE6DA;border-left-color:var(--ok);color:#157A52;}
+  details.fulltext.opened summary:hover{background:#E1F2E8;}
+  details.fulltext.opened .ft-ic{color:var(--ok);}
+  details.fulltext.opened .ft-label-todo,details.fulltext.opened .ft-pill.todo{display:none;}
+  details.fulltext.opened .ft-label-done{display:inline;}
+  details.fulltext.opened .ft-pill.done{display:inline-block;}
+  .fulltext-body{margin:12px 0 14px;}
   .src-link{display:inline-flex;align-items:center;gap:8px;font-size:13px;font-weight:600;color:var(--navy-2);text-decoration:none;border:1px solid var(--hair);background:#fff;border-radius:7px;padding:10px 14px;}
   .src-link:hover{background:#F7F9FC;border-color:var(--cyan);}
   .src-links{display:flex;flex-direction:column;gap:8px;align-items:flex-start;}
@@ -228,6 +241,8 @@
     .chk{flex:1;justify-content:center;min-height:46px;}
     .btn-ghost{min-height:42px;}
     .field-intent-text{font-size:15px;}
+    details.fulltext .ft-pill{display:none;}
+    details.fulltext.opened .ft-pill.done{display:none;}
   }
   @media print{
     .masthead{background:var(--navy)!important;-webkit-print-color-adjust:exact;print-color-adjust:exact;}
@@ -246,12 +261,12 @@
       <span class="brand-mark">ASCEND<span class="pipe">|</span>Mount Sinai</span>
       <p class="eyebrow">Executive Education Committee · Pre-Meeting Review</p>
       <h1 class="mast-title">Policy Review Packet</h1>
-      <p class="mast-sub">Sixteen policies under review ahead of the meeting. For each, read the intent, what's changing, and the rationale and implications, and open the full governed text where you want depth. On each card, mark <b>Reviewed — no questions or comments</b> or <b>Reviewed — I have questions/comments</b> to track your own progress (it stays on your screen), and use the comment form to send any question.</p>
+      <p class="mast-sub">Sixteen policies under review ahead of the meeting. For each, read the intent, what's changing, and the rationale and implications, and open the full governed text where you want depth. On each card, mark <b>Reviewed — no questions or comments</b> or <b>Reviewed — I have questions/comments</b> to track your own progress (it stays on your screen). Choosing the latter opens the comment form for that policy.</p>
     </div>
     <div class="mast-meta">
       <span class="pill">Review window</span><br>
       <strong>Meeting:</strong> Friday, July 10, 2026<br>
-      <strong>Distributed:</strong> Friday, July 3, 2026<br>
+      <strong>Distributed:</strong> Thursday, July 3, 2026<br>
       <strong>Review closes:</strong> Monday, July 6, 2026, 12:00 noon<br>
       <strong>Items:</strong> <span id="metaCounts">16</span>
     </div>
@@ -263,10 +278,9 @@
     </div>
     <div class="agree-stat">Flagged for comment&nbsp; <b id="flagNum">0</b></div>
     <div class="mast-actions">
-      <a class="btn-ghost" style="text-decoration:none;" href="https://form.jotform.com/261803233560046" target="_blank" rel="noopener">Comment form \u2197</a>
       <button class="btn-ghost" onclick="window.print()">Print</button>
     </div>
-    <p class="prevote-note">On each card, choose <b>Reviewed — no questions or comments</b> or <b>Reviewed — I have questions/comments</b>. This is a personal marker that stays on your screen; questions and comments are sent through the comment form. The formal vote is taken at the meeting.</p>
+    <p class="prevote-note">On each card, choose <b>Reviewed — no questions or comments</b> or <b>Reviewed — I have questions/comments</b>. This is a personal marker that stays on your screen; choosing 'I have questions/comments' opens the comment form. The formal vote is taken at the meeting.</p>
   </div>
 </header>
 
@@ -525,10 +539,15 @@ function card(p){
       </div>
       ${(p.related&&p.related.length)?`<div class="field"><p class="field-label">Related in this packet</p><div class="related">${p.related.map(r=>`<button class="relchip" data-rel="${r}">#${r} ${POLICIES.find(q=>q.n===r).title}</button>`).join("")}</div></div>`:""}
       <details class="fulltext">
-        <summary><span class="chev">\u25B6</span> Full policy text (authoritative)</summary>
+        <summary>
+          <span class="ft-ic" aria-hidden="true">\u2261</span>
+          <span class="ft-text"><span class="ft-label-todo">Read the full policy text</span><span class="ft-label-done">Full policy text \u2014 opened</span></span>
+          <span class="ft-pill todo">Authoritative \u00B7 please read</span>
+          <span class="ft-pill done">Opened \u2713</span>
+          <span class="chev">\u25B6</span>
+        </summary>
         <div class="fulltext-body">${fullInner}</div>
       </details>
-      <div class="cmtcta" id="cta-${p.n}" hidden><a class="cmtbtn" href="${FORM_URL}" target="_blank" rel="noopener">Open the comment form \u2197</a><span class="cmtcta-note">Select this policy (#${p.n}) in the form.</span></div>
     </div>
     <div class="card-foot">
       <p class="summary-note">Read the card, then record your review:</p>
@@ -549,6 +568,9 @@ function ledger(p){
 
 cardsEl.innerHTML = POLICIES.map(card).join("");
 ledgerEl.innerHTML = POLICIES.map(ledger).join("");
+document.querySelectorAll('details.fulltext').forEach(d=>{
+  d.addEventListener('toggle', ()=>{ if(d.open) d.classList.add('opened'); });
+});
 
 cardsEl.addEventListener('click', e=>{
   const btn = e.target.closest('.rv'); if(!btn) return;
@@ -557,6 +579,7 @@ cardsEl.addEventListener('click', e=>{
   if(reviewState[n]===want){ delete reviewState[n]; }
   else {
     reviewState[n]=want;
+    if(want==='flag') window.open(FORM_URL, '_blank', 'noopener');
   }
   syncCard(n); prog();
 });
@@ -570,7 +593,6 @@ function syncCard(n){
   c.classList.toggle('done', !!st);
   l.classList.toggle('done', !!st);
   l.classList.toggle('flagged', st==='flag');
-  const cta=document.getElementById('cta-'+n); if(cta) cta.hidden = (st!=='flag');
 }
 
 ledgerEl.addEventListener('click', e=>{const b=e.target.closest('[data-jump]');if(!b)return;document.getElementById('card-'+b.dataset.jump).scrollIntoView({block:'start'});});
