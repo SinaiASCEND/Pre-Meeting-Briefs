@@ -97,6 +97,8 @@
   .tag.fyi{background:var(--fyi-bg);color:#0F7C95;}
   .tag.src-ok{background:#E9F7EF;color:#1F7A52;}
   .tag.src-warn{background:#FFF3D6;color:#9A6A00;border:1px solid #F0DCA0;}
+  .tag.nat-endorse{background:#FFF3D6;color:#9A6A00;border:1px solid #F0DCA0;}
+  .tag.nat-coapprove{background:#FDEEE4;color:#A85A1E;border:1px solid #F2D6BF;}
 
 
   .dot.disc{background:var(--disc);}
@@ -389,7 +391,7 @@ const POLICIES = [
    gov:"<b>Approved by</b> Executive Oversight Committee &middot; <b>6/7/2024</b><br><b>LCME</b> 9.9 Student Advancement & Appeal; 11.0 Academic Support & Educational Records",
    changing:"Handbook shows EOC approval 6/7/2024; no later revision listed. Confirm whether any change is proposed."},
 
-  {n:8,type:"vote",src:"ok",title:"Characteristics of Accepted Applicants",hbName:"Admissions: LCME Policies & Procedures (MD Program Admissions)",
+  {n:8,type:"vote",src:"ok",nature:"endorse",title:"Characteristics of Accepted Applicants",hbName:"Admissions: LCME Policies & Procedures (MD Program Admissions)",
    links:[{l:"MD Program Admissions \u2014 LCME Policies & Procedures (PDF)",u:"https://icahn.mssm.edu/files/ISMMS/Assets/Education/Admissions/MD-Program-Admissions/ISMMS-LCME-Policies-and-Procedures.pdf"}],linkNote:"See the \u201CCharacteristics of Accepted Applicants\u201D policy within the PDF.",
    intent:"Structures applicant screening, interviewing, and evaluation so the Admissions Committee selects applicants whose academic skills and personal attributes predict success in medical school.",
    does:["Defines a list of personal attributes weighed at screening, interview, and ranking.","Reviews those attributes annually, informed by students\u2019 academic outcomes.","Keeps the attribute list embedded in the screening and interview forms and in Admissions Committee training."],
@@ -403,7 +405,7 @@ const POLICIES = [
    gov:"<b>Approved by</b> Executive Oversight Committee &middot; Pre-Clerkship Contact Hours <b>5/17/24</b><br><b>LCME</b> 8.8 Monitoring Student Time",
    changing:"Confirm whether the clinical work-hours policy has an ASCEND-specific version, or whether the version on file (written for the legacy classes) is being carried forward / revised for ASCEND."},
 
-  {n:10,type:"vote",src:"ok",title:"Pre-Med Requirements",hbName:"Admissions: LCME Policies & Procedures (MD Program Admissions)",
+  {n:10,type:"vote",src:"ok",nature:"coapprove",title:"Pre-Med Requirements",hbName:"Admissions: LCME Policies & Procedures (MD Program Admissions)",
    links:[{l:"MD Program Admissions \u2014 LCME Policies & Procedures (PDF)",u:"https://icahn.mssm.edu/files/ISMMS/Assets/Education/Admissions/MD-Program-Admissions/ISMMS-LCME-Policies-and-Procedures.pdf"}],linkNote:"See the \u201CPre-Medical Requirements\u201D policy within the PDF.",
    intent:"Sets the foundational premedical coursework required for admission, so applicants are prepared for the rigor of medical education alongside a broad undergraduate education.",
    does:["Requires minimum coursework: General Chemistry (1 yr), Organic Chemistry (1 sem), Biochemistry (1 sem), Biology (1 yr), Physics (1 sem), Lab (1 yr Bio/Chem), Statistics (1 sem; Biostatistics preferred), and intensive writing / English (1 yr).","Suggests exposure to social determinants of health (e.g., sociology, public health, bioethics).","Is reviewed by a Pre-Medical Requirements Working Group at least every three years; students document completion before matriculation."],
@@ -469,7 +471,10 @@ function tags(p){
   if(p.src==="ok") s='<span class="tag src-ok">Sourced</span>';
   else if(p.isNew) s='<span class="tag src-warn">New \u2014 unpublished</span>';
   else s='<span class="tag src-warn">Source needed</span>';
-  return v + s;
+  let nat='';
+  if(p.nature==='endorse') nat='<span class="tag nat-endorse">Endorsement</span>';
+  else if(p.nature==='coapprove') nat='<span class="tag nat-coapprove">Co-approval</span>';
+  return v + nat + s;
 }
 
 function card(p){
@@ -480,6 +485,8 @@ function card(p){
   const flag = p.flag ? `<div class="flag-row"><b>Flag \u2014</b> ${p.flag}</div>` : "";
   let askedText;
   if(isDisc){ askedText = `<b>Discussion, then a vote:</b> this new policy is brought to the EEC for discussion and a vote to approve.${p.src==="ok"?"":" Source text to follow."}`; }
+  else if(p.nature==='endorse'){ askedText = `<b>For a vote (endorsement):</b> the EEC is asked to endorse this Admissions-owned policy. Final approval rests with the Admissions Selections Subcommittee.`; }
+  else if(p.nature==='coapprove'){ askedText = `<b>For a vote (co-approval):</b> the EEC is a co-approving body with the Admissions Selections Subcommittee and is asked to approve this policy.`; }
   else { askedText = `<b>For a vote:</b> the EEC is asked to approve the policy as presented.`; }
 
   const govField = p.gov ? `<div class="field"><p class="field-label">Governance & approval</p><div class="gov">${p.gov}</div></div>` : "";
